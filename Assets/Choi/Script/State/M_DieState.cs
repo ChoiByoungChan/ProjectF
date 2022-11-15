@@ -19,4 +19,9 @@ public class M_DieState : MonsterBaseState
             MonoBehaviour.Destroy(gameObj);
         }
     }
+
+    public override void Exit()
+    {
+        //ShopManager.Instance.Wave++
+    }
 }
