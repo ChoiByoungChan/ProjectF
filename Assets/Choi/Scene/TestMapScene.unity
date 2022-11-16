@@ -612,12 +612,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsters:
-  - {fileID: 0}
+  - {fileID: 5071189253744806945, guid: d25ced29027ed4a40ab06c9ec3db929c, type: 3}
   - {fileID: 4614367452818741610, guid: 85e1f6ac821df284cbbc491d2839cac9, type: 3}
   - {fileID: 174418, guid: e8c61f653ab1b834b88dc949047967a5, type: 3}
   - {fileID: 196076, guid: 71834e7e2d4cddd4f8973b6363e92025, type: 3}
   - {fileID: 139696, guid: f9b2c36027fc51a478c4bb251bac8f2b, type: 3}
   nextAction: {fileID: 8742245033929350139}
+  monsterSpawn: {fileID: 833505087}
 --- !u!65 &2114061570
 BoxCollider:
   m_ObjectHideFlags: 0

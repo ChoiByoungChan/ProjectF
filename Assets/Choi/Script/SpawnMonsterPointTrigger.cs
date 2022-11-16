@@ -7,6 +7,7 @@ public class SpawnMonsterPointTrigger : MonoBehaviour
 {
     [SerializeField] GameObject[] monsters;
     [SerializeField] TurnWaveLight nextAction;
+    [SerializeField] Transform monsterSpawn;
     BoxCollider spawnCollider;
 
     private void Awake()
@@ -18,15 +19,15 @@ public class SpawnMonsterPointTrigger : MonoBehaviour
 
     private void SetTrigger()
     {
-        spawnCollider.isTrigger = true;
+        spawnCollider.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.name == "Player")
         {
-            Instantiate(monsters[GameManager.Instance.Wave]);
-            spawnCollider.isTrigger = false;
+            Instantiate(monsters[GameManager.Instance.Wave],monsterSpawn.position,Quaternion.Euler(0,0,0));
+            spawnCollider.enabled = false;
         }
     }
 }

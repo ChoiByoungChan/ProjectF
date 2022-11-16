@@ -8,8 +8,7 @@ public class TurnWaveLight : MonoBehaviour
     private Monster monster;    
 
     public UnityAction NextWaveAction;
-
-    private void Awake()
+    private void Start()
     {
         monster = FindObjectOfType<Monster>();
         monster.monsterDieAction += TurnLight;
