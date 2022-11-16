@@ -7,7 +7,7 @@ public class PlayerTest : MonoBehaviour
     GameObject monster;
     private void Start()
     {
-        monster = GameObject.Find("Monster1");
+        monster = GameObject.Find("VecryScearMonster(Clone)");
     }
     void Update()
     {
@@ -15,7 +15,7 @@ public class PlayerTest : MonoBehaviour
         {
             if(monster.TryGetComponent(out IHitable hit))
             {
-                hit.Hit(100);
+                hit.Hit(10);
             }
         }
     }
