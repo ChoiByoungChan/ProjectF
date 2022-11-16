@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(CharacterController))]
 public class Monster : MonoBehaviour, IHitable
@@ -12,6 +13,8 @@ public class Monster : MonoBehaviour, IHitable
     public Animator animator;
     public CharacterController monsterController;
     public GameObject player;
+
+    public UnityAction monsterDieAction;
 
     public Collider monsterCol;
 
@@ -26,6 +29,7 @@ public class Monster : MonoBehaviour, IHitable
             if (hp <= 0)
             {
                 SetState(new M_DieState(gameObject));
+                monsterDieAction?.Invoke();
             }
         }
     }
@@ -57,7 +61,6 @@ public class Monster : MonoBehaviour, IHitable
         curState = input;
         curState.Enter();
     }
-
 
     public void Hit(float damage)
     {
