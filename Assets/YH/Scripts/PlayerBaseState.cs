@@ -227,13 +227,14 @@ public class PlayerHitState : PlayerBaseState
     {
         player.isGuardOver = false;
         
-        if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+        if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99)
         {
             player.SetState(new PlayerIdleState(player.gameObject));
         }
     }
     public override void Exit()
     {
+        Debug.Log("안풀리냐?");
         player.hitEffect.Stop();
         player.isHit = false;
     }
@@ -255,9 +256,5 @@ public class PlayerDieState : PlayerBaseState
         {
             player.SetState(new PlayerIdleState(player.gameObject));
         }
-    }
-    public override void Exit()
-    {
-
     }
 }

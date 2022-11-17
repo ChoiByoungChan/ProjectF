@@ -13,7 +13,7 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<IHitable>() !=null)
+        if(other.GetComponent<IHitable>() !=null && other.gameObject.tag != "Player")
         {
             IHitable enem;
             other.TryGetComponent<IHitable>(out enem);
