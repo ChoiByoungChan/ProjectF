@@ -28,6 +28,8 @@ public class Player : MonoBehaviour,IHitable
     public bool isAttackOver;
     public bool isGuardOver;
     public Vector3 moveInput;
+    public JoyStick joyStick;
+    public Vector3 movePosition;
     private IStater curState;
     private PlayerIdleState playerIdleState;
     private PlayerWalkState playerWalkState;
@@ -133,8 +135,8 @@ public class Player : MonoBehaviour,IHitable
     {
         if (isAttackOver)
         {
+            inputDirection = transform.InverseTransformDirection(-inputDirection);
             character.Move(inputDirection * moveSpeed * Time.deltaTime);
-            gameObject.transform.forward = inputDirection;
             SetState(playerWalkState);
         }
     }

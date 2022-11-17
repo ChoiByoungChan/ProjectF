@@ -7,13 +7,12 @@ public class JoyStick : MonoBehaviour,IPointerDownHandler,IPointerUpHandler,IDra
 {
     [SerializeField] private RectTransform rectBackGround;
     [SerializeField] private RectTransform rectJoyStcik;
-
     private float radius;
     [SerializeField] private Player player;
     [SerializeField] private float moveSpeed;
 
     private bool isTouch = false;
-    private Vector3 movePosition;
+    public Vector3 movePosition;
 
     private void Start()
     {
@@ -24,8 +23,8 @@ public class JoyStick : MonoBehaviour,IPointerDownHandler,IPointerUpHandler,IDra
     {
         if (isTouch)
         {
-            player.transform.position += movePosition;
-            player.Move(movePosition);
+            //player.transform.position += movePosition;
+           player.Move(movePosition);
         }
     }
     public void OnDrag(PointerEventData eventData)
@@ -36,6 +35,7 @@ public class JoyStick : MonoBehaviour,IPointerDownHandler,IPointerUpHandler,IDra
         float distance = Vector2.Distance(rectBackGround.position, rectJoyStcik.position) / radius;
         value = value.normalized;
         movePosition = new Vector3(value.x * moveSpeed * distance * Time.deltaTime, 0f, value.y * moveSpeed * distance * Time.deltaTime);
+        //movePosition = transform.InverseTransformDirection(movePosition);
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -47,6 +47,7 @@ public class JoyStick : MonoBehaviour,IPointerDownHandler,IPointerUpHandler,IDra
         value = value.normalized;
         movePosition = new Vector3(value.x * moveSpeed * distance * Time.deltaTime, 0f, value.y * moveSpeed * distance * Time.deltaTime);
         isTouch = true;
+        //movePosition = transform.InverseTransformDirection(movePosition);
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -54,9 +55,5 @@ public class JoyStick : MonoBehaviour,IPointerDownHandler,IPointerUpHandler,IDra
         isTouch = false;
         rectJoyStcik.localPosition = Vector3.zero;
         movePosition = Vector3.zero;
-    }
-    public void JoyStickMove()
-    {
-
     }
 }
