@@ -129,8 +129,8 @@ public class Player : MonoBehaviour,IHitable
     {
         if (isAttackOver)
         {
-            moveInput = transform.InverseTransformDirection(inputDirection);
-            character.Move(moveInput * moveSpeed * Time.deltaTime);
+            movePosition = transform.InverseTransformDirection(inputDirection);
+            character.Move(movePosition * moveSpeed * Time.deltaTime);
             SetState(playerWalkState);
         }
     }
