@@ -1872,7 +1872,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1229009647683397649, guid: 82765ed30d041cc4d9a76e3ff7ed7e8d, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1455693245633174696, guid: 82765ed30d041cc4d9a76e3ff7ed7e8d, type: 3}
       propertyPath: m_TagString
