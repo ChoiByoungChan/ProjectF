@@ -25,11 +25,13 @@ public class Item : Singleton<Item>
     public void HpUp1()
     {
         player.maxhp += 50;
+        player.Hp = player.maxhp;
         Debug.Log("체력업1");
     }
     public void HpUp2()
     {
         player.maxhp += 100;
+        player.Hp = player.maxhp;
         Debug.Log("체력업2");
     }
     public void AtkUp1()
