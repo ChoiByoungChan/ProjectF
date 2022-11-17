@@ -22,8 +22,6 @@ public class SkyBoxMaker : MonoBehaviour
 
     private void SetSkybox()
     {
-        Debug.Log("스카이박스 변환");
-        
         RenderSettings.skybox = skyboxs[GameManager.Instance.Wave];
     }
 
