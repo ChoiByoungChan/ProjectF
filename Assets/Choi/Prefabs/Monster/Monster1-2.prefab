@@ -1871,16 +1871,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edcdc226957c14e4a86484a00e4f8b2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
   atk: 0
+  speed: 0
   scriptable: {fileID: 11400000, guid: 0fac3e22ed5f54f4980a042e6ae53443, type: 2}
   animator: {fileID: 0}
   monsterController: {fileID: 0}
   player: {fileID: 0}
-  isDead: 0
+  monsterCol: {fileID: 0}
   attackCols:
   - {fileID: 6615039194806461399}
   - {fileID: 8541762488858651713}
-  count: 0
+  isRush: 0
 --- !u!65 &8541762488266167746
 BoxCollider:
   m_ObjectHideFlags: 0
