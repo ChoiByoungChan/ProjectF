@@ -5,7 +5,8 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField]
     private GameObject shopCanvas;
-    
+
+    [SerializeField]
     private int wave = 0;
     private int curWave;
     public int Wave

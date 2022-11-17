@@ -14,7 +14,7 @@ public class AttackTrigger : MonoBehaviour
         {
             target = other.gameObject;
             hitable = target.GetComponent<IHitable>();
+            hitable.Hit(monster.atk);
         }
-        hitable.Hit(monster.atk);
     }
 }

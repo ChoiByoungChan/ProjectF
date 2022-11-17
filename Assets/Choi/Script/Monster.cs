@@ -6,15 +6,14 @@ using UnityEngine.Events;
 [RequireComponent(typeof(CharacterController))]
 public class Monster : MonoBehaviour, IHitable
 {
-    private float hp;
+    [SerializeField]private float hp;
+    //public GameObject nextLight;
     public float atk;
     public float speed;
     public M_ScriptableObject scriptable;
     public Animator animator;
     public CharacterController monsterController;
     public GameObject player;
-
-    public UnityAction monsterDieAction;
 
     public Collider monsterCol;
 
@@ -29,7 +28,6 @@ public class Monster : MonoBehaviour, IHitable
             if (hp <= 0)
             {
                 SetState(new M_DieState(gameObject));
-                monsterDieAction?.Invoke();
             }
         }
     }
