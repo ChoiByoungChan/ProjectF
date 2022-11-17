@@ -25,14 +25,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1612574927}
-  m_LocalRotation: {x: 0.057452444, y: 0.8914137, z: -0.118072085, w: 0.433751}
-  m_LocalPosition: {x: 0.33671713, y: 2, z: -2.8431206}
+  m_LocalRotation: {x: 0.21743202, y: -0.009772609, z: 0.00043216837, w: 0.9760265}
+  m_LocalPosition: {x: 0.07999998, y: 4.02, z: -2.9300003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5183217762491675243}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 25.116, y: -1.195, z: -0.216}
 --- !u!20 &1612574929
 Camera:
   m_ObjectHideFlags: 0
@@ -2152,7 +2152,7 @@ GameObject:
   - component: {fileID: 1864410596811598555}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2224,6 +2224,8 @@ MonoBehaviour:
   isAttackOver: 0
   isGuardOver: 0
   moveInput: {x: 0, y: 0, z: 0}
+  joyStick: {fileID: 0}
+  movePosition: {x: 0, y: 0, z: 0}
 --- !u!54 &1864410596811598554
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3744,6 +3746,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 462620645058396016, guid: ff7e23d7571923145adbdad061138236, type: 3}
   m_PrefabInstance: {fileID: 3430760640937189999}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6650727369033230994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8345350353612589309, guid: ff7e23d7571923145adbdad061138236, type: 3}
+  m_PrefabInstance: {fileID: 3430760640937189999}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2052529364
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6650727369033230994}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.20495686, y: 0.028221814, z: 0.90274584}
+  m_Center: {x: 0.0018962302, y: -0.00008330979, z: 0.32296145}
+--- !u!114 &2052529365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6650727369033230994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd45abcedabea2489923bf78374d585, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1864410596811598550}
 --- !u!1001 &6929656360460088827
 PrefabInstance:
   m_ObjectHideFlags: 0
