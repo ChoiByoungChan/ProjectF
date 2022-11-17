@@ -13,8 +13,11 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        IHitable enem;
-        other.TryGetComponent<IHitable>(out enem);
-        Attack(enem);
+        if(other.GetComponent<IHitable>() !=null)
+        {
+            IHitable enem;
+            other.TryGetComponent<IHitable>(out enem);
+            Attack(enem);
+        }
     }
 }
