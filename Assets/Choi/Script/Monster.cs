@@ -15,6 +15,8 @@ public class Monster : MonoBehaviour, IHitable
     public CharacterController monsterController;
     public GameObject player;
 
+    public M_DieState m_die;
+
     public Collider monsterCol;
 
     public Collider[] attackCols;
@@ -27,7 +29,7 @@ public class Monster : MonoBehaviour, IHitable
             hp = value;
             if (hp <= 0)
             {
-                SetState(new M_DieState(gameObject));
+                SetState(m_die);
             }
         }
     }
@@ -37,6 +39,7 @@ public class Monster : MonoBehaviour, IHitable
 
     private void Awake()
     {
+        m_die = new M_DieState(gameObject);
         animator = GetComponent<Animator>();
         monsterController = GetComponent<CharacterController>();
         monsterCol = GetComponent<Collider>();

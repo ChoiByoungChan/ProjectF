@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.TextCore.Text;
+
+
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Animator))]
-public class Player : MonoBehaviour,IHitable
+public class Player : MonoBehaviour, IHitable
 {
     [SerializeField]
     private Slider hpBar;
     [SerializeField]
     private TextMeshProUGUI hpText;
+    [SerializeField] private GameObject gameOverButton;
     private CharacterController character;
     public GameObject comboUI;
     public ParticleSystem swordEffect;
     public ParticleSystem shieldEffect;
     public ParticleSystem hitEffect;
-    private float moveSpeed;
+    public float moveSpeed;
+    public TurnWaveLight waveAction;
     public float comboNumber;
     public float maxhp;
     public float minAtk;
@@ -26,47 +31,38 @@ public class Player : MonoBehaviour,IHitable
     public float thirdAtk;
     public bool isHit;
     public bool isAttackOver;
-    public bool isGuardOver;
     public Vector3 moveInput;
-    public Vector3 movePosition;
     private Vector3 gravity;
     public JoyStick joyStick;
-    
+    public Animator animator;
+    public Vector3 movePosition;
     private IStater curState;
-    private PlayerIdleState playerIdleState;
+    public PlayerIdleState playerIdleState;
     private PlayerWalkState playerWalkState;
     private PlayerAttackState playerAttackState;
-    private PlayerAttackTwoState playerAttackTwoState;
+    public PlayerAttackTwoState playerAttackTwoState;
     private PlayerShieldState playerShieldState;
     private PlayerRollState playerRollState;
     private PlayerHitState playerHitState;
     private PlayerDieState playerDieState;
     private WaitForSeconds fiveSeconds;
+    public PlayerAttackThreeState playerAttackThreeState;
     private float hp;
+    public CapsuleCollider bodyCollider;
+
     public float Hp
     {
         get { return hp; }
-        set 
+        set
         {
-            if (isGuardOver == false)
-                return;
-            if (hp < maxhp && isHit == false && value < 0)
             {
-                hp = value / def;
-                hpBar.value = hp;
-                hpText.text = "HP : "+ hp;
-                isHit = true;
-                SetState(playerHitState);
+                hp = value;
+                HpUI();
                 if (hp <= 0)
                 {
                     SetState(playerDieState);
-                    hp = maxhp;
+                    //hp = maxhp;
                 }
-            }
-            if(value > 0)
-            {
-                hp = value;
-                hpBar.value = hp;
             }
         }
     }
@@ -74,7 +70,7 @@ public class Player : MonoBehaviour,IHitable
     public float Atk
     {
         get { return atk; }
-        set 
+        set
         {
             atk = value;
         }
@@ -83,8 +79,8 @@ public class Player : MonoBehaviour,IHitable
     public float Def
     {
         get { return def; }
-        set 
-        { 
+        set
+        {
             def = value;
         }
     }
@@ -99,6 +95,7 @@ public class Player : MonoBehaviour,IHitable
     }
     private void Awake()
     {
+        animator = GetComponent<Animator>();
         comboNumber = 0;
         maxhp = 100;
         hp = maxhp;
@@ -111,22 +108,23 @@ public class Player : MonoBehaviour,IHitable
         hpRecovery = 0f;
         fiveSeconds = new WaitForSeconds(5f);
         isAttackOver = true;
-        isGuardOver = true;
         isHit = false;
         character = GetComponent<CharacterController>();
-        playerIdleState = new PlayerIdleState(this.gameObject);
-        playerWalkState = new PlayerWalkState(this.gameObject);
-        playerAttackState = new PlayerAttackState(this.gameObject);
-        playerAttackTwoState = new PlayerAttackTwoState(this.gameObject);
-        playerShieldState = new PlayerShieldState(this.gameObject);
-        playerHitState = new PlayerHitState(this.gameObject);
-        playerDieState = new PlayerDieState(this.gameObject);
-        playerRollState = new PlayerRollState(this.gameObject);
+        playerIdleState = new PlayerIdleState(gameObject);
+        playerWalkState = new PlayerWalkState(gameObject);
+        playerAttackState = new PlayerAttackState(gameObject);
+        playerAttackTwoState = new PlayerAttackTwoState(gameObject);
+        playerShieldState = new PlayerShieldState(gameObject);
+        playerHitState = new PlayerHitState(gameObject);
+        playerDieState = new PlayerDieState(gameObject);
+        playerRollState = new PlayerRollState(gameObject);
+        playerAttackThreeState = new PlayerAttackThreeState(gameObject);
     }
     private void Start()
     {
         SetState(playerIdleState);
         StartCoroutine(HpRecovery());
+        waveAction.NextWaveAction += NextWaveSetPosition;
     }
     private void Update()
     {
@@ -139,10 +137,16 @@ public class Player : MonoBehaviour,IHitable
     {
         if (isAttackOver)
         {
-            movePosition = transform.InverseTransformDirection(-inputDirection);
+            movePosition = transform.InverseTransformDirection(inputDirection);
             character.Move(movePosition * moveSpeed * Time.deltaTime);
             SetState(playerWalkState);
         }
+    }
+    private void NextWaveSetPosition()
+    {
+        character.enabled = false;
+        transform.position = new Vector3(-0.5f, 6.05f, 21.55f);
+        character.enabled = true;
     }
     public void Attack()
     {
@@ -152,22 +156,21 @@ public class Player : MonoBehaviour,IHitable
             SetState(playerAttackState);
         }
         else if (!isAttackOver)
-        { 
+        {
             comboNumber++;
         }
-        else if(!isAttackOver && comboNumber == 1)
+        else if (!isAttackOver && comboNumber == 1)
         {
             comboNumber++;
         }
     }
     public void Shield()
     {
-            isGuardOver = false;
-            SetState(playerShieldState);
+        SetState(playerShieldState);
     }
     public void Roll()
     {
-            SetState(playerRollState);
+        SetState(playerRollState);
     }
     IEnumerator HpRecovery()
     {
@@ -179,7 +182,23 @@ public class Player : MonoBehaviour,IHitable
     }
     public void Hit(float damage)
     {
-        Hp -= damage;
+        if (!isHit)
+        {
+            Hp -= (damage / Def);
+            SetState(playerHitState);
+        }
+    }
+    private void HpUI()
+    {
+        hpBar.maxValue = maxhp;
+        hpBar.value = hp;
+        hpText.text = "HP : " + hp;
+    }
+
+    public void PlayerDie()
+    {
+        Time.timeScale = 0.1f;
+        gameOverButton.SetActive(true);
     }
 }
 
