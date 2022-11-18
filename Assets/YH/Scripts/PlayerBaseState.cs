@@ -161,18 +161,18 @@ public class PlayerShieldState : PlayerBaseState
     {
         player.animator.SetTrigger("Shield");
         player.shieldEffect.Play();
-        player.isGuardOver = false;
+        player.bodyCollider.enabled = false;
     }
     public override void Update()
     {
         if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99)
         {
             player.SetState(player.playerIdleState);
-            player.isGuardOver = true;
         }
     }
     public override void Exit()
     {
+        player.bodyCollider.enabled = true;
         player.shieldEffect.Stop();
     }
 }
@@ -202,6 +202,7 @@ public class PlayerHitState : PlayerBaseState
     {
         player.hitEffect.Play();
         player.animator.SetTrigger("Hit");
+        player.isHit = true;
     }
     public override void Update()
     {

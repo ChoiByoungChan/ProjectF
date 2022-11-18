@@ -13,7 +13,6 @@ public class TurnWaveLight : MonoBehaviour
         {
             GameManager.Instance.Wave++;
             NextWaveAction?.Invoke();
-            //플레이어 위치 바꾸고
             gameObject.SetActive(false);
         }
     }
