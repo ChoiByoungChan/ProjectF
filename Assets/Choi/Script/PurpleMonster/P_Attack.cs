@@ -19,7 +19,7 @@ public class P_Attack : M_AttackState
 
     public override void Update()
     {
-        if (monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f && monster.animator.GetCurrentAnimatorStateInfo(0).IsName("Basic Attack"))
+        if (monster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.75f && monster.animator.GetCurrentAnimatorStateInfo(0).IsName("Basic Attack"))
         {
             monster.SetState(p_monster.p_movement);
         }

@@ -14,6 +14,7 @@ public class Player : MonoBehaviour,IHitable
     private Slider hpBar;
     [SerializeField]
     private TextMeshProUGUI hpText;
+    [SerializeField] private GameObject gameOverButton;
     private CharacterController character;
     public GameObject comboUI;
     public ParticleSystem swordEffect;
@@ -32,18 +33,21 @@ public class Player : MonoBehaviour,IHitable
     public bool isAttackOver;
     public bool isGuardOver;
     public Vector3 moveInput;
+    private Vector3 gravity;
     public JoyStick joyStick;
+    public Animator animator;
     public Vector3 movePosition;
     private IStater curState;
-    private PlayerIdleState playerIdleState;
+    public PlayerIdleState playerIdleState;
     private PlayerWalkState playerWalkState;
     private PlayerAttackState playerAttackState;
-    private PlayerAttackTwoState playerAttackTwoState;
+    public PlayerAttackTwoState playerAttackTwoState;
     private PlayerShieldState playerShieldState;
     private PlayerRollState playerRollState;
     private PlayerHitState playerHitState;
     private PlayerDieState playerDieState;
     private WaitForSeconds fiveSeconds;
+    public PlayerAttackThreeState playerAttackThreeState;
     private float hp;
     public float Hp
     {
@@ -90,6 +94,7 @@ public class Player : MonoBehaviour,IHitable
     }
     private void Awake()
     {
+        animator = GetComponent<Animator>();
         comboNumber = 0;
         maxhp = 100;
         hp = maxhp;
@@ -113,6 +118,7 @@ public class Player : MonoBehaviour,IHitable
         playerHitState = new PlayerHitState(this.gameObject);
         playerDieState = new PlayerDieState(this.gameObject);
         playerRollState = new PlayerRollState(this.gameObject);
+        playerAttackThreeState = new PlayerAttackThreeState(this.gameObject);
     }
     private void Start()
     {
@@ -123,6 +129,8 @@ public class Player : MonoBehaviour,IHitable
     private void Update()
     {
         curState.Update();
+        gravity.y += Physics.gravity.y;
+        character.Move(gravity * Time.deltaTime);
         hpBar.maxValue = maxhp;
     }
     public void Move(Vector3 inputDirection)
@@ -175,7 +183,7 @@ public class Player : MonoBehaviour,IHitable
     }
     public void Hit(float damage)
     {
-        if(isGuardOver)
+        if (isGuardOver || !isHit)
         {
             Hp -= (damage / Def);
             isHit = true;
@@ -187,6 +195,12 @@ public class Player : MonoBehaviour,IHitable
         hpBar.maxValue = maxhp;
         hpBar.value = hp;
         hpText.text = "HP : " + hp;
+    }
+
+    public void PlayerDie()
+    {
+        Time.timeScale = 0.1f;
+        gameOverButton.SetActive(true);
     }
 }
 
