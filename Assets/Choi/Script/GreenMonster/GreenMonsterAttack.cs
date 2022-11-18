@@ -18,7 +18,6 @@ public class GreenMonsterAttack : M_AttackState
     {
         if (greenMonster.animator.GetCurrentAnimatorStateInfo(0).IsName("Claw Attack") && greenMonster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)
         {
-            Debug.Log("≈ª√‚");
             greenMonster.SetState(greenMonster.g_MoveState);
         }
     }
@@ -44,7 +43,6 @@ public class GreenMonsterRushAttack : GreenMonsterAttack
     {
         if (greenMonster.animator.GetCurrentAnimatorStateInfo(0).IsName("Horn Attack") && greenMonster.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)
         {
-            Debug.Log("≈ª√‚2");
             greenMonster.SetState(greenMonster.g_MoveState);
         }
     }

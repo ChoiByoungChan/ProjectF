@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.TextCore.Text;
+
+
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour,IHitable
@@ -16,7 +19,8 @@ public class Player : MonoBehaviour,IHitable
     public ParticleSystem swordEffect;
     public ParticleSystem shieldEffect;
     public ParticleSystem hitEffect;
-    private float moveSpeed;
+    public float moveSpeed;
+    public TurnWaveLight waveAction;
     public float comboNumber;
     public float maxhp;
     public float minAtk;
@@ -28,10 +32,8 @@ public class Player : MonoBehaviour,IHitable
     public bool isAttackOver;
     public bool isGuardOver;
     public Vector3 moveInput;
-    public Vector3 movePosition;
-    private Vector3 gravity;
     public JoyStick joyStick;
-    
+    public Vector3 movePosition;
     private IStater curState;
     private PlayerIdleState playerIdleState;
     private PlayerWalkState playerWalkState;
@@ -48,25 +50,14 @@ public class Player : MonoBehaviour,IHitable
         get { return hp; }
         set 
         {
-            if (isGuardOver == false)
-                return;
-            if (hp < maxhp && isHit == false && value < 0)
             {
-                hp = value / def;
-                hpBar.value = hp;
-                hpText.text = "HP : "+ hp;
-                isHit = true;
-                SetState(playerHitState);
+                hp = value;
+                HpUI();
                 if (hp <= 0)
                 {
                     SetState(playerDieState);
-                    hp = maxhp;
+                    //hp = maxhp;
                 }
-            }
-            if(value > 0)
-            {
-                hp = value;
-                hpBar.value = hp;
             }
         }
     }
@@ -127,22 +118,27 @@ public class Player : MonoBehaviour,IHitable
     {
         SetState(playerIdleState);
         StartCoroutine(HpRecovery());
+        waveAction.NextWaveAction += NextWaveSetPosition;
     }
     private void Update()
     {
         curState.Update();
-        gravity.y += Physics.gravity.y;
-        character.Move(gravity * Time.deltaTime);
         hpBar.maxValue = maxhp;
     }
     public void Move(Vector3 inputDirection)
     {
         if (isAttackOver)
         {
-            movePosition = transform.InverseTransformDirection(-inputDirection);
-            character.Move(movePosition * moveSpeed * Time.deltaTime);
+            moveInput = transform.InverseTransformDirection(inputDirection);
+            character.Move(moveInput * moveSpeed * Time.deltaTime);
             SetState(playerWalkState);
         }
+    }
+    private void NextWaveSetPosition()
+    {
+        character.enabled = false;
+        transform.position = new Vector3(-0.5f, 6.05f, 21.55f);
+        character.enabled = true;
     }
     public void Attack()
     {
@@ -179,7 +175,18 @@ public class Player : MonoBehaviour,IHitable
     }
     public void Hit(float damage)
     {
-        Hp -= damage;
+        if(isGuardOver)
+        {
+            Hp -= (damage / Def);
+            isHit = true;
+            SetState(playerHitState);
+        }
+    }
+    private void HpUI()
+    {
+        hpBar.maxValue = maxhp;
+        hpBar.value = hp;
+        hpText.text = "HP : " + hp;
     }
 }
 

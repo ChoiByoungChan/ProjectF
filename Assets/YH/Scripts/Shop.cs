@@ -7,7 +7,6 @@ using TMPro;
 
 public class Shop : MonoBehaviour
 {
-    public Player player;
     public Button[] buttons;
     public Item item;
     public Action[] getItem = new Action[3];
@@ -16,7 +15,7 @@ public class Shop : MonoBehaviour
     public TextMeshProUGUI[] tooltips;
     public ItemData[] items;
     [SerializeField]
-    private int random;
+    private int random;    
 
     /* private void Awake()
      {

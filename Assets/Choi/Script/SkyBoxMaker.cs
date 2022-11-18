@@ -27,7 +27,10 @@ public class SkyBoxMaker : MonoBehaviour
 
     private void FogSetting()
     {
+        Debug.Log("안개 추가");
+
         float wave = GameManager.Instance.Wave;
+        Debug.Log(wave);
         if (wave == 0)
         {
             RenderSettings.fog = false;
