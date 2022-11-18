@@ -28,8 +28,10 @@ public class Player : MonoBehaviour,IHitable
     public bool isAttackOver;
     public bool isGuardOver;
     public Vector3 moveInput;
-    public JoyStick joyStick;
     public Vector3 movePosition;
+    private Vector3 gravity;
+    public JoyStick joyStick;
+    
     private IStater curState;
     private PlayerIdleState playerIdleState;
     private PlayerWalkState playerWalkState;
@@ -129,14 +131,16 @@ public class Player : MonoBehaviour,IHitable
     private void Update()
     {
         curState.Update();
+        gravity.y += Physics.gravity.y;
+        character.Move(gravity * Time.deltaTime);
         hpBar.maxValue = maxhp;
     }
     public void Move(Vector3 inputDirection)
     {
         if (isAttackOver)
         {
-            inputDirection = transform.InverseTransformDirection(-inputDirection);
-            character.Move(inputDirection * moveSpeed * Time.deltaTime);
+            movePosition = transform.InverseTransformDirection(-inputDirection);
+            character.Move(movePosition * moveSpeed * Time.deltaTime);
             SetState(playerWalkState);
         }
     }
