@@ -915,8 +915,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 154.27861, y: 52.182465, z: 104.82172}
-  m_Center: {x: -47.388195, y: -1.2540623, z: 4.529391}
+  m_Size: {x: 224.01651, y: 52.182465, z: 104.82172}
+  m_Center: {x: -82.2567, y: -1.2539698, z: 4.5294123}
 --- !u!114 &1254701488070608534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1874,7 +1874,7 @@ MonoBehaviour:
   hp: 0
   atk: 0
   speed: 0
-  scriptable: {fileID: 11400000, guid: 0fac3e22ed5f54f4980a042e6ae53443, type: 2}
+  scriptable: {fileID: 11400000, guid: 1f7d849de2766624bb5790166b7d01a4, type: 2}
   animator: {fileID: 0}
   monsterController: {fileID: 0}
   player: {fileID: 0}
