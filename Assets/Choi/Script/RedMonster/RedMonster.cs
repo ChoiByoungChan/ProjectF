@@ -21,6 +21,7 @@ public class RedMonster : Monster
         r_attack = new R_Attack(gameObject);
         r_movement = new R_Movement(gameObject);
         r_scream = new R_Scream(gameObject);
+        m_die = new R_DieState(gameObject);
         isAngry = false;
         isFlameCool = true;
         isCool = true;

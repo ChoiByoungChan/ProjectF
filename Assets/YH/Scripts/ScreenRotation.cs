@@ -24,6 +24,7 @@ public class ScreenRotation : MonoBehaviour
 
     void Start()
     {
+        cameraSensitivity = 2;
         this.rightFingerId = -1;    //-1은 추적중이 아닌 손가락
         this.halfScreenWidth = Screen.width / 2;
         this.originalPos = new Vector3(0, 0, 0);
@@ -65,13 +66,19 @@ public class ScreenRotation : MonoBehaviour
                         {
 
                             //수평
-                            this.prevPoint = t.position - t.deltaPosition;
-                            this.transform.RotateAround(this.player.transform.position, Vector3.up, -(t.position.x - this.prevPoint.x) * 0.2f);
-                            this.prevPoint = t.position;
+                            //this.prevPoint = t.position - t.deltaPosition;
+                            ////this.transform.RotateAround(transform.position, Vector3.up, -(t.position.x - this.prevPoint.x) * 0.2f);
+                            //this.cameraTransform.localRotation = Quaternion.Euler(t.position.x - this.prevPoint.x, 0, 0);
+                            //this.prevPoint = t.position;
 
-
-                            //수직
+                            //this.lookInput = t.deltaPosition * this.cameraSensitivity * Time.deltaTime;
+                            //this.prevPoint = t.position - t.deltaPosition;
+                            //this.cameraPitch = Mathf.Clamp(this.cameraPitch - this.prevPoint.x, 20f, 160f);
+                            //this.cameraTransform.localRotation = Quaternion.Euler(0, this.prevPoint.x, 0);
                             this.lookInput = t.deltaPosition * this.cameraSensitivity * Time.deltaTime;
+                            this.transform.Rotate(transform.up, lookInput.x);
+                            //수직
+                            
                             this.cameraPitch = Mathf.Clamp(this.cameraPitch - this.lookInput.y, 10f, 35f);
                             this.cameraTransform.localRotation = Quaternion.Euler(this.cameraPitch, 0, 0);
                         }
