@@ -1323,7 +1323,7 @@ PrefabInstance:
     - target: {fileID: 1864410596811598550, guid: 82765ed30d041cc4d9a76e3ff7ed7e8d, type: 3}
       propertyPath: hitEffect
       value: 
-      objectReference: {fileID: 534395782}
+      objectReference: {fileID: 0}
     - target: {fileID: 1864410596811598550, guid: 82765ed30d041cc4d9a76e3ff7ed7e8d, type: 3}
       propertyPath: swordEffect
       value: 
@@ -1384,9 +1384,9 @@ PrefabInstance:
     - {fileID: 1864410596811598554, guid: 82765ed30d041cc4d9a76e3ff7ed7e8d, type: 3}
     - {fileID: 1864410596811598555, guid: 82765ed30d041cc4d9a76e3ff7ed7e8d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 82765ed30d041cc4d9a76e3ff7ed7e8d, type: 3}
---- !u!198 &534395782 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6305650483441460909, guid: 82765ed30d041cc4d9a76e3ff7ed7e8d, type: 3}
+--- !u!1 &534395782 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5523011537993722065, guid: 82765ed30d041cc4d9a76e3ff7ed7e8d, type: 3}
   m_PrefabInstance: {fileID: 534395781}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &534395783 stripped
@@ -1497,7 +1497,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1864410596811598550, guid: 82765ed30d041cc4d9a76e3ff7ed7e8d, type: 3}
   m_PrefabInstance: {fileID: 534395781}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 534395782}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 211cca0f4dcbdf84781b32bf22abe09a, type: 3}
@@ -1544,8 +1544,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -180, y: -35}
-  m_SizeDelta: {x: 300, y: 100}
+  m_AnchoredPosition: {x: -250, y: -35}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &549935086
 MonoBehaviour:
@@ -2238,6 +2238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopCanvas: {fileID: 1174294858}
+  wave: 0
 --- !u!4 &867126052
 Transform:
   m_ObjectHideFlags: 0
@@ -2972,7 +2973,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c333306af9e19b418b4dd10e2b5bafa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   buttons:
   - {fileID: 1305367417}
   - {fileID: 1911385737}
@@ -3602,11 +3602,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1399156242}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2123a71553e30844db542d750b4197c7, type: 3}
+  m_Script: {fileID: 11500000, guid: d29cdec9d39a1e24ba42e105764d1723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  cam: {fileID: 0}
+  player: {fileID: 534395782}
+  speed: 0
+  cameraTransform: {fileID: 780702802}
+  cameraSensitivity: 0
 --- !u!4 &1465018260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6670186364725270995, guid: 82765ed30d041cc4d9a76e3ff7ed7e8d, type: 3}
