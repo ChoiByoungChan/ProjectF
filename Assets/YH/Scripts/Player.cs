@@ -8,7 +8,7 @@ using UnityEngine.TextCore.Text;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Animator))]
-public class Player : MonoBehaviour,IHitable
+public class Player : MonoBehaviour, IHitable
 {
     [SerializeField]
     private Slider hpBar;
@@ -31,7 +31,6 @@ public class Player : MonoBehaviour,IHitable
     public float thirdAtk;
     public bool isHit;
     public bool isAttackOver;
-    public bool isGuardOver;
     public Vector3 moveInput;
     private Vector3 gravity;
     public JoyStick joyStick;
@@ -49,10 +48,12 @@ public class Player : MonoBehaviour,IHitable
     private WaitForSeconds fiveSeconds;
     public PlayerAttackThreeState playerAttackThreeState;
     private float hp;
+    public CapsuleCollider bodyCollider;
+
     public float Hp
     {
         get { return hp; }
-        set 
+        set
         {
             {
                 hp = value;
@@ -69,7 +70,7 @@ public class Player : MonoBehaviour,IHitable
     public float Atk
     {
         get { return atk; }
-        set 
+        set
         {
             atk = value;
         }
@@ -78,8 +79,8 @@ public class Player : MonoBehaviour,IHitable
     public float Def
     {
         get { return def; }
-        set 
-        { 
+        set
+        {
             def = value;
         }
     }
@@ -107,18 +108,17 @@ public class Player : MonoBehaviour,IHitable
         hpRecovery = 0f;
         fiveSeconds = new WaitForSeconds(5f);
         isAttackOver = true;
-        isGuardOver = true;
         isHit = false;
         character = GetComponent<CharacterController>();
-        playerIdleState = new PlayerIdleState(this.gameObject);
-        playerWalkState = new PlayerWalkState(this.gameObject);
-        playerAttackState = new PlayerAttackState(this.gameObject);
-        playerAttackTwoState = new PlayerAttackTwoState(this.gameObject);
-        playerShieldState = new PlayerShieldState(this.gameObject);
-        playerHitState = new PlayerHitState(this.gameObject);
-        playerDieState = new PlayerDieState(this.gameObject);
-        playerRollState = new PlayerRollState(this.gameObject);
-        playerAttackThreeState = new PlayerAttackThreeState(this.gameObject);
+        playerIdleState = new PlayerIdleState(gameObject);
+        playerWalkState = new PlayerWalkState(gameObject);
+        playerAttackState = new PlayerAttackState(gameObject);
+        playerAttackTwoState = new PlayerAttackTwoState(gameObject);
+        playerShieldState = new PlayerShieldState(gameObject);
+        playerHitState = new PlayerHitState(gameObject);
+        playerDieState = new PlayerDieState(gameObject);
+        playerRollState = new PlayerRollState(gameObject);
+        playerAttackThreeState = new PlayerAttackThreeState(gameObject);
     }
     private void Start()
     {
@@ -156,22 +156,21 @@ public class Player : MonoBehaviour,IHitable
             SetState(playerAttackState);
         }
         else if (!isAttackOver)
-        { 
+        {
             comboNumber++;
         }
-        else if(!isAttackOver && comboNumber == 1)
+        else if (!isAttackOver && comboNumber == 1)
         {
             comboNumber++;
         }
     }
     public void Shield()
     {
-            isGuardOver = false;
-            SetState(playerShieldState);
+        SetState(playerShieldState);
     }
     public void Roll()
     {
-            SetState(playerRollState);
+        SetState(playerRollState);
     }
     IEnumerator HpRecovery()
     {
@@ -183,10 +182,9 @@ public class Player : MonoBehaviour,IHitable
     }
     public void Hit(float damage)
     {
-        if (isGuardOver || !isHit)
+        if (!isHit)
         {
             Hp -= (damage / Def);
-            isHit = true;
             SetState(playerHitState);
         }
     }
