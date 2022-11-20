@@ -20,6 +20,7 @@ public class Player : MonoBehaviour, IHitable
     public ParticleSystem swordEffect;
     public ParticleSystem shieldEffect;
     public ParticleSystem hitEffect;
+    public GameObject cam; 
     public float moveSpeed;
     public TurnWaveLight waveAction;
     public float comboNumber;
@@ -31,6 +32,7 @@ public class Player : MonoBehaviour, IHitable
     public float thirdAtk;
     public bool isHit;
     public bool isAttackOver;
+    public bool isMoveOver;
     public Vector3 moveInput;
     private Vector3 gravity;
     public JoyStick joyStick;
@@ -38,7 +40,7 @@ public class Player : MonoBehaviour, IHitable
     public Vector3 movePosition;
     private IStater curState;
     public PlayerIdleState playerIdleState;
-    private PlayerWalkState playerWalkState;
+    public PlayerWalkState playerWalkState;
     private PlayerAttackState playerAttackState;
     public PlayerAttackTwoState playerAttackTwoState;
     private PlayerShieldState playerShieldState;
@@ -129,6 +131,7 @@ public class Player : MonoBehaviour, IHitable
     private void Update()
     {
         curState.Update();
+        Debug.Log(curState.ToString());
         gravity.y += Physics.gravity.y;
         character.Move(gravity * Time.deltaTime);
         hpBar.maxValue = maxhp;
@@ -137,9 +140,9 @@ public class Player : MonoBehaviour, IHitable
     {
         if (isAttackOver)
         {
-            movePosition = transform.InverseTransformDirection(inputDirection);
-            character.Move(movePosition * moveSpeed * Time.deltaTime);
-            SetState(playerWalkState);
+            //SetState(playerWalkState);
+            //movePosition = transform.InverseTransformDirection(inputDirection);
+            character.Move(-inputDirection * moveSpeed * Time.deltaTime);
         }
     }
     private void NextWaveSetPosition()
