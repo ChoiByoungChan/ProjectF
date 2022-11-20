@@ -9,25 +9,18 @@ public class ScreenRotation : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     [SerializeField] private float speed;
-
-    private int rightFingerId;
-    float halfScreenWidth;  //화면 절반만 터치하면 카메라 회전
     private Vector2 prevPoint;
-
-    private Vector3 originalPos;
-    public Transform cameraTransform;
-    public float cameraSensitivity;
-
     private Vector2 lookInput;
+    private int rightFingerId;
+    private float halfScreenWidth;  //화면 절반만 터치하면 카메라 회전
     private float cameraPitch; //pitch 시점
-
-
+    public float cameraSensitivity;
+    public Transform cameraTransform;
     void Start()
     {
         cameraSensitivity = 2;
         this.rightFingerId = -1;    //-1은 추적중이 아닌 손가락
         this.halfScreenWidth = Screen.width / 2;
-        this.originalPos = new Vector3(0, 0, 0);
         this.cameraPitch = 35f;
     }
 
@@ -35,7 +28,7 @@ public class ScreenRotation : MonoBehaviour
     void Update()
     {
         this.transform.position = Vector3.Lerp(this.transform.position, this.player.transform.position + new Vector3(0, this.transform.position.y, 0), this.speed);
-
+        Debug.DrawLine(cameraTransform.position, cameraTransform.forward, Color.red);
         GetTouchInput();
     }
 
@@ -53,7 +46,6 @@ public class ScreenRotation : MonoBehaviour
                     if (t.position.x > this.halfScreenWidth && this.rightFingerId == -1)
                     {
                         this.rightFingerId = t.fingerId;
-                        Debug.Log("오른쪽 손가락 입력");
                     }
                     break;
 
@@ -64,23 +56,15 @@ public class ScreenRotation : MonoBehaviour
                     {
                         if (t.fingerId == this.rightFingerId)
                         {
+                            this.prevPoint = t.position - t.deltaPosition;
+                            float horizon = t.position.x - this.prevPoint.x;
+                            this.transform.RotateAround(this.player.transform.position, Vector3.up, -(horizon) * 0.2f) ;
+                            this.prevPoint = t.position;
 
-                            //수평
-                            //this.prevPoint = t.position - t.deltaPosition;
-                            ////this.transform.RotateAround(transform.position, Vector3.up, -(t.position.x - this.prevPoint.x) * 0.2f);
-                            //this.cameraTransform.localRotation = Quaternion.Euler(t.position.x - this.prevPoint.x, 0, 0);
-                            //this.prevPoint = t.position;
-
-                            //this.lookInput = t.deltaPosition * this.cameraSensitivity * Time.deltaTime;
-                            //this.prevPoint = t.position - t.deltaPosition;
-                            //this.cameraPitch = Mathf.Clamp(this.cameraPitch - this.prevPoint.x, 20f, 160f);
-                            //this.cameraTransform.localRotation = Quaternion.Euler(0, this.prevPoint.x, 0);
                             this.lookInput = t.deltaPosition * this.cameraSensitivity * Time.deltaTime;
-                            this.transform.Rotate(transform.up, lookInput.x);
-                            //수직
-                            
                             this.cameraPitch = Mathf.Clamp(this.cameraPitch - this.lookInput.y, 10f, 35f);
                             this.cameraTransform.localRotation = Quaternion.Euler(this.cameraPitch, 0, 0);
+                            
                         }
                     }
                     break;
@@ -99,8 +83,6 @@ public class ScreenRotation : MonoBehaviour
                     if (t.fingerId == this.rightFingerId)
                     {
                         this.rightFingerId = -1;
-                        Debug.Log("오른쪽 손가락 끝");
-
                     }
                     break;
 
@@ -109,13 +91,9 @@ public class ScreenRotation : MonoBehaviour
                     if (t.fingerId == this.rightFingerId)
                     {
                         this.rightFingerId = -1;
-                        Debug.Log("오른쪽 손가락 끝");
-
                     }
                     break;
             }
         }
     }
-
-
 }
