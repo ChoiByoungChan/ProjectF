@@ -43,10 +43,11 @@ public class PlayerWalkState : PlayerBaseState
     public override void Enter()
     {
         player.animator.SetBool("Walk", true);
+        player.isMoveOver = false;
     }
     public override void Update()
     {
-        if(player.moveInput.magnitude == 0 /*&& player.isAttackOver == true*/)
+        if (player.isMoveOver)
         {
             player.SetState(player.playerIdleState);
         }
@@ -70,7 +71,7 @@ public class PlayerAttackState : PlayerBaseState
     }
     public override void Update()
     {
-        if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5)
+        if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Attack") && player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5)
         {
             comboUI.SetActive(true);
             if(player.comboNumber == 1)
@@ -79,7 +80,7 @@ public class PlayerAttackState : PlayerBaseState
                 player.SetState(player.playerAttackTwoState);
             }
         }
-        if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)
+        if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Attack") && player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)
         {
             comboUI.SetActive(false);
             player.SetState(player.playerIdleState);
@@ -104,7 +105,7 @@ public class PlayerAttackTwoState : PlayerBaseState
     public override void Update()
     {
 
-        if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5)
+        if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Attack2") && player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5)
         {
             comboUI.SetActive(true);
             if (player.comboNumber == 2)
@@ -113,7 +114,7 @@ public class PlayerAttackTwoState : PlayerBaseState
                 player.SetState(player.playerAttackThreeState);
             }
         }
-        if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)
+        if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Attack3") && player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)
         {
             comboUI.SetActive(false);
             player.SetState(player.playerIdleState);
@@ -141,7 +142,7 @@ public class PlayerAttackThreeState : PlayerBaseState
     }
     public override void Update()
     {
-        if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)
+        if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Attack3") && player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99f)
         {
             player.SetState(player.playerIdleState);
         }
@@ -165,7 +166,7 @@ public class PlayerShieldState : PlayerBaseState
     }
     public override void Update()
     {
-        if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99)
+        if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Shield") && player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99)
         {
             player.SetState(player.playerIdleState);
         }
@@ -187,10 +188,7 @@ public class PlayerRollState : PlayerBaseState
     }
     public override void Update()
     {
-        if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99)
-        {
             player.SetState(player.playerIdleState);
-        }
     }
 }
 public class PlayerHitState : PlayerBaseState
@@ -206,7 +204,7 @@ public class PlayerHitState : PlayerBaseState
     }
     public override void Update()
     {
-        if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99)
+        if (player.animator.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Hit") && player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.99)
         {
             player.SetState(player.playerIdleState);
             player.isHit = false;
